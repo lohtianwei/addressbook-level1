@@ -14,7 +14,16 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.Iterator;
 
 
 
@@ -481,7 +490,6 @@ public class AddressBook {
      */
     private static ArrayList<HashMap<PersonProperty, String>> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<HashMap<PersonProperty, String>> matchedPersons = new ArrayList<>();
-        //final Collection<String> keywordsLowerCased = lowerCased(keywords);
         for (HashMap<PersonProperty, String> person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
             if (!Collections.disjoint(lowerCased(wordsInName), lowerCased(keywords))) {
