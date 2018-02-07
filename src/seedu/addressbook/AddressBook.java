@@ -7,6 +7,7 @@ package seedu.addressbook;
  * ====================================================================
  */
 
+import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -90,6 +91,7 @@ public class AddressBook {
     private static final String MESSAGE_ERROR_MISSING_STORAGE_FILE = "Storage file missing: %1$s";
     private static final String MESSAGE_ERROR_READING_FROM_FILE = "Unexpected error: unable to read from file: %1$s";
     private static final String MESSAGE_ERROR_WRITING_TO_FILE = "Unexpected error: unable to write to file: %1$s";
+    private static final String MESSAGE_ERROR_READ_ONLY = "File specified is READ ONLY. Unable to write to file: %1$s";
     private static final String MESSAGE_PERSONS_FOUND_OVERVIEW = "%1$d persons found!";
     private static final String MESSAGE_STORAGE_FILE_CREATED = "Created new empty storage file: %1$s";
     private static final String MESSAGE_WELCOME = "Welcome to your Address Book!";
@@ -789,6 +791,9 @@ public class AddressBook {
             Files.write(Paths.get(storageFilePath), linesToWrite);
         } catch (IOException ioe) {
             showToUser(new String[]{String.format(MESSAGE_ERROR_WRITING_TO_FILE, filePath)});
+            exitProgram();
+        } catch (IllegalAccessError iae) {
+            showToUser(new String[]{String.format(MESSAGE_ERROR_READ_ONLY,filePath)});
             exitProgram();
         }
     }
